@@ -1,10 +1,71 @@
 const Product = require("../models/product");
 
+
+
+class Operations {
+    constructor(query, query_values) {
+        this.query = query;
+        this.query_values = query_values;
+    }
+
+    filtering() {
+        const queryObj = { ...this.query_values } //queryString = req.query\
+        // console.log('queryObj', queryObj);
+
+        const excludedFields = ['page', 'sort', 'limit']
+        excludedFields.forEach(el => delete (queryObj[el]))
+        // console.log('queryObj', queryObj);
+        let queryStr = JSON.stringify(queryObj)
+
+        queryStr = queryStr.replace(/\b(gte|gt|lt|lte|regex)\b/g, match => '$' + match)
+        console.log('querystr', queryStr);
+
+        //    gte = greater than or equal
+        //    lte = lesser than or equal
+        //    lt = lesser than
+        //    gt = greater than
+        //    regex = filter by other string fields
+        this.query.find(JSON.parse(queryStr))
+
+        return this;
+    }
+
+    sorting() {
+
+        if (this.query_values.sort) {
+            const sortBy = this.query_values.sort.split(',').join(' ');
+            console.log(sortBy);
+            this.query = this.query.sort(sortBy);
+        }
+        else {
+            this.query = this.query.sort('-createdAt');
+        }
+
+        return this
+    }
+
+    pagination() {
+        const page = this.queryString.page * 1 || 1
+        const limit = this.queryString.limit * 1 || 9
+        const skip = (page - 1) * limit;
+        this.query = this.query.skip(skip).limit(limit)
+        return this;
+    }
+}
+
+
 exports.getProducts = async (req, res) => {
     try {
         // res.send("get products");
-        const products = await Product.find({});
-        res.status(200).json({ products });
+        const operations = new Operations(Product.find({}), req.query)
+            .filtering().sorting().pagination();
+        const products = await operations.query;
+        res.status(200).json({
+            status: "success",
+            results: products.length,
+            products,
+
+        });
 
     }
     catch (e) {
