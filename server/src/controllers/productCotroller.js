@@ -18,7 +18,7 @@ class Operations {
         let queryStr = JSON.stringify(queryObj)
 
         queryStr = queryStr.replace(/\b(gte|gt|lt|lte|regex)\b/g, match => '$' + match)
-        console.log('querystr', queryStr);
+        // console.log('querystr', queryStr);
 
         //    gte = greater than or equal
         //    lte = lesser than or equal
@@ -34,7 +34,7 @@ class Operations {
 
         if (this.query_values.sort) {
             const sortBy = this.query_values.sort.split(',').join(' ');
-            console.log(sortBy);
+            // console.log(sortBy);
             this.query = this.query.sort(sortBy);
         }
         else {
@@ -45,8 +45,8 @@ class Operations {
     }
 
     pagination() {
-        const page = this.queryString.page * 1 || 1
-        const limit = this.queryString.limit * 1 || 9
+        const page = this.queryString?.page * 1 || 1
+        const limit = this.queryString?.limit * 1 || 9
         const skip = (page - 1) * limit;
         this.query = this.query.skip(skip).limit(limit)
         return this;

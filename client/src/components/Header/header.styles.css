@@ -1,0 +1,35 @@
+.header{
+    /* width: 100%; */
+    margin-top: 1rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    justify-content: start;
+    align-items: center;
+    /* border-bottom: 1px solid #ddd; */
+    box-shadow: 0 5px 20px #ddd;
+    font-family: 'Squada One', cursive;
+    
+}
+
+.header .header-text{
+
+    padding: 1.2rem;
+    margin-left: 4rem;
+    width: 30%;
+    font-weight: 400;
+    font-size: 1.5rem;
+    line-height: 3rem;
+    /* text-align: center; */
+    padding-left: 1rem;
+    color: rgb(27, 33, 112);
+    letter-spacing: 0.2rem;
+}
+
+.header .header-img{
+    margin-left: 5rem;
+    width: 55%;
+}
+

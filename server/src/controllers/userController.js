@@ -35,7 +35,7 @@ exports.refreshToken = (req, res) => {
     try {
         const rt = req.cookies.refreshToken;
         if (!rt) {
-            return res.status(400).send("please signin or signup");
+            return res.status(400).send("please signin or signup no refresh token");
         }
         jwt.verify(rt, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
             if (err)
@@ -65,13 +65,15 @@ exports.signIn = async (req, res) => {
         const accessToken = createAccessToken(user);
         const refreshToken = createRefreshToken(user);
 
+        console.log(refreshToken);
+
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
             path: '/api/refresh_token',
             maxAge: 7 * 24 * 60 * 60 * 1000 // 7d
         })
 
-        res.status(200).send({ user, accessToken });
+        res.status(200).json({ user, accessToken });
     }
     catch (e) {
         return res.status(500).json({ error: e.message });
