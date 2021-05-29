@@ -24,7 +24,7 @@ export const GlobalData = (props) => {
 
     useEffect(() => {
         const accessToken = localStorage.getItem('accessToken');
-        console.log(accessToken);
+        // console.log(accessToken);
         if (accessToken) {
             setToken(accessToken);
         }

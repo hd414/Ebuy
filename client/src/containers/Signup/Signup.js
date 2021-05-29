@@ -21,7 +21,7 @@ const Signup = () => {
     const FormSubmitHandler = async (e) => {
         e.preventDefault();
         try {
-            await axiosInstance.post('/signup', { ...user });
+            await axiosInstance.post('/signup', { ...user, role: "admin" });
 
             localStorage.setItem('firstSignup', true);
 

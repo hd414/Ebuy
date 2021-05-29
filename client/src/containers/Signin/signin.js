@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import axiosInstance from '../../helpers/axios';
 import './signin.styles.css';
 const Signin = () => {
@@ -9,6 +10,8 @@ const Signin = () => {
         password: ''
     })
 
+    const history = useHistory();
+
 
     const onChangeHandler = (e) => {
         const { name, value } = e.target;
@@ -18,6 +21,7 @@ const Signin = () => {
     const FormSubmitHandler = async (e) => {
         e.preventDefault();
         try {
+            // console.log(User)
             const res = await axiosInstance.post('/signin', { ...User });
             const user = res.data.user;
             const accessToken = res.data.accessToken;

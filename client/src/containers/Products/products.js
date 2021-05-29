@@ -9,7 +9,7 @@ const Products = () => {
 
     const state = useContext(GlobalState);
     const [products] = state.Products.products;
-    console.log(products);
+    // console.log(products);
     return (
         <>
             {products.length === 0 && <Loader />}

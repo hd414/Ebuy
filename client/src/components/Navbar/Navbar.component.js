@@ -10,9 +10,10 @@ import axiosInstance from '../../helpers/axios';
 const Navbar = () => {
 
     const state = useContext(GlobalState);
-    // console.log(state);
+    console.log(state);
     const [isAuth, setIsAuth] = state.User.Auth;
     const [isAdmin, setIsAdmin] = state.User.isAdmin;
+    const [cartItems, setCartItems] = state.User.cart;
 
 
 
@@ -21,6 +22,7 @@ const Navbar = () => {
         localStorage.clear();
         setIsAdmin(false);
         setIsAuth(false);
+        setCartItems([]);
     }
 
     const AdminRoute = () => {
@@ -73,8 +75,8 @@ const Navbar = () => {
 
             { isAdmin ? '' : (
                 <div className="cart">
-                    <span className="quantity">0</span>
-                    <Link to='/cart'><img src={cart} width="30px" alt="cart" /></Link>
+                    <span className="quantity">{cartItems.length}</span>
+                    <Link to='/cart'><img src={cart} width="40px" alt="cart" /></Link>
                 </div>
             )}
 

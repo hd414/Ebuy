@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import ProductCard from '../../../components/ProudctCard/productCard';
 import { GlobalState } from '../../../context/globalState';
 import './productDetails.css';
@@ -9,8 +10,10 @@ const ProductDetails = () => {
 
     const state = useContext(GlobalState);
     const [products] = state.Products.products;
+    const addToCart = state.User.addToCart;
     const [productDetail, setProductDetail] = useState([]);
     const params = useParams();
+
 
 
     useEffect(() => {
@@ -22,7 +25,7 @@ const ProductDetails = () => {
     }, [params.id, products])
 
 
-    console.log(productDetail);
+    // console.log(productDetail);
 
     return (
         <>
@@ -84,10 +87,12 @@ const ProductDetails = () => {
                         </div>
                     </div>
                     <div className="footer">
-                        <button type="button">
-                            <img src="http://co0kie.github.io/codepen/nike-product-page/cart.png" alt="" />
-                            <span>add to cart</span>
-                        </button>
+                        <Link className="link" to='/cart' onClick={() => addToCart(productDetail)}>
+                            <button type="button" >
+                                <img src="http://co0kie.github.io/codepen/nike-product-page/cart.png" alt="" />
+                                <span>add to cart</span>
+                            </button>
+                        </Link>
                         <a href="#!"><img src="http://co0kie.github.io/codepen/nike-product-page/share.png" alt="" /></a>
                     </div>
                 </div>
