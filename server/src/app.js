@@ -10,7 +10,7 @@ const userRouter = require('./routes/userRoutes');
 const categoryRouter = require('./routes/categoryRoutes');
 const uploadRouter = require('./routes/uploads');
 const productRouter = require('./routes/productRoutes');
-
+const paymentRouter = require('./routes/paymentRoute');
 
 const app = express();
 
@@ -26,6 +26,7 @@ app.use('/api', userRouter);
 app.use('/api', categoryRouter);
 app.use('/api', uploadRouter);
 app.use('/api', productRouter);
+app.use('/api', paymentRouter);
 
 
 mongoose.connect(process.env.MONGODB_URL, {

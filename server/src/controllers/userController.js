@@ -55,7 +55,7 @@ exports.signIn = async (req, res) => {
     try {
 
         const { email, password } = req.body;
-
+        console.log(req.body)
         const user = await User.findByCredentials(email, password);
         console.log(user)
 
@@ -113,3 +113,19 @@ const createRefreshToken = (user) => {
     return jwt.sign({ _id: user._id.toString() }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '6d' });
 }
 
+exports.addCart = async (req, res) => {
+    try {
+        const user = User.findById(req.user._id);
+        // console.log(req)
+        if (!user)
+            res.status(400).json({ error: "user does not exists" });
+
+        await User.findByIdAndUpdate({ _id: req.user._id }, {
+            cart: req.body.cart
+        })
+        res.status(200).json({ msg: "item added to cart" })
+    }
+    catch (e) {
+        res.status(500).json({ error: e.message })
+    }
+}
