@@ -8,6 +8,7 @@ const Cart = () => {
 
     const state = useContext(GlobalState);
     const [cartItems, setCartItems] = state.User.cart;
+    const [trigger, setTrigger] = state.User.Trigger;
     const [total, setTotal] = useState(0);
     const [token] = state.Token;
 
@@ -29,6 +30,7 @@ const Cart = () => {
 
         setCartItems([])
         changeInCart([])
+        setTrigger(trigger => !trigger);
         alert("You have successfully placed an order.")
     }
 

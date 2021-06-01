@@ -7,6 +7,8 @@ const UserApi = (token) => {
     const [isAuth, setIsAuth] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [cartItems, setCartItems] = useState([]);
+    const [history, setHistory] = useState([]);
+    const [trigger, setTrigger] = useState(false);
 
     const getUser = async () => {
         try {
@@ -56,6 +58,29 @@ const UserApi = (token) => {
         // console.log("cartItems", cartItems);
     }
 
+    const getHistory = async () => {
+        let hist;
+        if (isAdmin) {
+            hist = await axiosInstance.get('/payment', {
+                headers: { Authorization: token }
+            });
+        }
+        else {
+            hist = await axiosInstance.get('/history', {
+                headers: { Authorization: token }
+            });
+        }
+
+        setHistory(hist.data)
+    }
+
+    useEffect(async () => {
+        if (token) {
+
+            await getHistory();
+
+        }
+    }, [token, trigger, isAdmin])
 
     useEffect(() => {
         getUser();
@@ -66,6 +91,9 @@ const UserApi = (token) => {
         isAdmin: [isAdmin, setIsAdmin],
         cart: [cartItems, setCartItems],
         addToCart: addToCart,
+        History: [history, setHistory],
+        Trigger: [trigger, setTrigger]
+
     }
 }
 

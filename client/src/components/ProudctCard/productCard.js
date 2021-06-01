@@ -1,16 +1,31 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import './productCard.css';
 import { Link } from 'react-router-dom';
 import { GlobalState } from '../../context/globalState';
+import axiosInstance from '../../helpers/axios';
+import Loader from '../Loader/loader.component';
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, deleteProduct, loading }) => {
 
     const state = useContext(GlobalState);
-    // console.log(state);
-    // const [isAuth, setIsAuth] = state.User.Auth;
+
     const [isAdmin, setIsAdmin] = state.User.isAdmin;
+    const [products, setProducts] = state.Products.products;
     const addToCart = state.User.addToCart;
 
+
+
+
+    const CheckBoxHandler = () => {
+        const updatedProdcuts = [...products];
+        updatedProdcuts.forEach((pro) => {
+            if (pro._id === product._id) {
+                pro.checked = !pro.checked;
+            }
+        })
+        setProducts(products => [...updatedProdcuts]);
+        // console.log(products);
+    }
 
 
 
@@ -19,7 +34,7 @@ const ProductCard = ({ product }) => {
     }
 
     const adminBtn = <>
-        <Link to='#'>
+        <Link to='#' onClick={deleteProduct}>
             <input className="ip-add-cart" type="button" value="Delete" />
         </Link>
         <Link to={`/edit_product/${product._id}`}>
@@ -37,25 +52,43 @@ const ProductCard = ({ product }) => {
     </>
 
 
+    // if (loading) {
+    //     return (
+    //         <div className="container">
+    //             <Loader />
+    //         </div>
+    //     )
+    // }
+
+
+
     return (
+        <>
 
-        <div className="container">
+            <div className="container">
 
-            {
-                isAdmin && <input type="checkbox" className="product_checkbox" checked={product.checked} />
-            }
-            <img src={product.images.url} alt="product" className="img-fruit" />
-            <h3>{product.title}</h3>
+                {
+                    isAdmin && <input type="checkbox"
+                        className="product_checkbox"
+                        checked={product.checked}
+                        onChange={CheckBoxHandler}
 
-            <p>
-                {truncate(product.description, 20)}
-            </p>
+                    />
+                }
+                <img src={product.images.url} alt="product" className="img-fruit" />
+                <h3>{product.title}</h3>
+
+                <p>
+                    {truncate(product.description, 20)}
+                </p>
 
 
-            <h4>Price : <span>{product.price}</span></h4>
+                <h4>Price : <span>{product.price}</span></h4>
 
-            {isAdmin ? adminBtn : UserBtn}
-        </div>
+                {isAdmin ? adminBtn : UserBtn}
+            </div>
+
+        </>
 
     )
 }

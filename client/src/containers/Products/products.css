@@ -4,3 +4,16 @@
     flex-direction: row;
     width: 100%;
 }
+
+.selectAll{
+    color: rgb(60, 49, 223);
+    text-transform:uppercase;
+}
+
+.delete-selected{
+    color:red;
+    border:1px solid red;
+    border-radius: 5px;
+    margin-left: 1rem;
+    text-transform: uppercase;
+}

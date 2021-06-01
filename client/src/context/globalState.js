@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { createContext } from "react";
 import UserApi from '../api/auth.api.';
+import CategoriesApi from '../api/category';
 import Products from '../api/products.api';
 import axiosInstance from '../helpers/axios';
 
@@ -33,7 +34,8 @@ export const GlobalData = (props) => {
     const state = {
         Token: [token, setToken],
         Products: Products(),
-        User: UserApi(token)
+        User: UserApi(token),
+        Categories: CategoriesApi()
     }
 
     return (
