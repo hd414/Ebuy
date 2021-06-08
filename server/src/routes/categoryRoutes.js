@@ -1,5 +1,6 @@
 const { getCategory, createCategory, deleteCategory, editCategory } = require('../controllers/categoryController');
-const { auth, isAdmin } = require('../middleware/auth');
+const { authAdmin, isAdmin } = require('../middleware/authAdmin');
+
 
 
 
@@ -7,8 +8,8 @@ const router = require('express').Router();
 
 
 router.get('/category/get', getCategory);
-router.post('/category/create', auth, isAdmin, createCategory)
-router.delete('/category/:id', auth, isAdmin, deleteCategory);
-router.put('/category/:id', auth, isAdmin, editCategory);
+router.post('/category/create', authAdmin, isAdmin, createCategory)
+router.delete('/category/:id', authAdmin, isAdmin, deleteCategory);
+router.put('/category/:id', authAdmin, isAdmin, editCategory);
 
 module.exports = router;

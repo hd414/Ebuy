@@ -1,11 +1,12 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+const payment = require('../models/payment');
 
 
 exports.signUp = async (req, res) => {
     try {
-        const { name, email, password, contactNumber, role } = req.body;
-        const user = new User({ name, email, password, contactNumber, role });
+        const { name, email, password, contactNumber, address } = req.body;
+        const user = new User({ name, email, password, contactNumber, address });
         const userPresent = await User.findOne({ email });
         if (userPresent) {
             return res.status(400).json({ error: "email is already exists" });
@@ -55,9 +56,9 @@ exports.signIn = async (req, res) => {
     try {
 
         const { email, password } = req.body;
-        console.log(req.body)
+        // console.log(req.body)
         const user = await User.findByCredentials(email, password);
-        console.log(user)
+        // console.log(user)
 
         if (!user)
             return res.status(400).json({ error: "user does not exists" });
@@ -65,7 +66,7 @@ exports.signIn = async (req, res) => {
         const accessToken = createAccessToken(user);
         const refreshToken = createRefreshToken(user);
 
-        console.log(refreshToken);
+        // console.log(refreshToken);
 
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
@@ -92,7 +93,7 @@ exports.signOut = async (req, res) => {
 
 exports.getUser = async (req, res) => {
     try {
-        console.log(req.user);
+        // console.log(req.user);
         const user = await User.findById(req.user._id).select('-password');
         if (!user) {
             return res.status(400).json({ error: "user does not exists" });
@@ -127,5 +128,15 @@ exports.addCart = async (req, res) => {
     }
     catch (e) {
         res.status(500).json({ error: e.message })
+    }
+}
+
+exports.getHistory = async (req, res) => {
+    try {
+        const history = await payment.find({ user_id: req.user._id });
+        res.status(200).json(history);
+    }
+    catch (e) {
+        res.status(500).json({ error: e.message });
     }
 }

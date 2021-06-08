@@ -1,4 +1,6 @@
 const Product = require("../models/product");
+const Shop = require("../models/shop");
+
 
 
 
@@ -54,12 +56,26 @@ class Operations {
 }
 
 
+exports.getProduct = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const product = await Product.findById(id).populate("shop", { shopName: 1 });
+        res.status(200).json({ product });
+    }
+    catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+}
+
 exports.getProducts = async (req, res) => {
     try {
         // res.send("get products");
         const operations = new Operations(Product.find({}), req.query)
             .filtering().sorting().pagination();
         const products = await operations.query;
+
+        // await products.populate("shop").execPopulate;
+
         res.status(200).json({
             status: "success",
             results: products.length,
@@ -76,19 +92,27 @@ exports.getProducts = async (req, res) => {
 exports.createProduct = async (req, res) => {
     try {
         // res.send("create  products");
-        const { product_id, title, price, description, content, images, category } = req.body;
+        const { title, price, description, content, images, category } = req.body;
+        const shop = req.shop._id;
 
         if (!images) {
             return res.status(400).json({ error: "images should be uploaded" });
         }
 
-        const product = await Product.findOne({ product_id });
+        const product = await Product.findOne({ shop, title });
 
         if (product)
             return res.status(400).json({ error: "this product already exists" });
 
-        const prod = new Product({ product_id, title: title.toLowerCase(), price, description, content, images, category });
+        const prod = new Product({ shop, title: title.toLowerCase(), price, description, content, images, category });
         const result = await prod.save();
+
+        const shopTemp = await Shop.findById(shop);
+        shopTemp.products.push(prod._id);
+        await shopTemp.save();
+
+
+
         res.status(200).json({ prod });
     }
     catch (e) {
@@ -100,6 +124,7 @@ exports.editProducts = async (req, res) => {
     try {
         // res.send("edit product");
         const id = req.params.id;
+        const shop = req.shop._id;
         const { title, price, description, content, images, category } = req.body;
 
         const product = await Product.findByIdAndUpdate({ _id: id },
@@ -117,6 +142,16 @@ exports.deleteProducts = async (req, res) => {
         // res.send("delete prodcut");
         const id = req.params.id;
         await Product.findByIdAndDelete(id);
+        const shopTemp = await Shop.findById(req.shop._id);
+
+
+        const newProducts = shopTemp.products.filter((product) => {
+            return !product.equals(id)
+        })
+
+        shopTemp.products = newProducts;
+        await shopTemp.save();
+
         res.status(200).json({ msg: "product deleted" });
     }
     catch (e) {

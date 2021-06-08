@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const userSchema = mongoose.Schema({
-    name: {
+const shopSchema = mongoose.Schema({
+    shopName: {
         type: String,
         required: true,
         trim: true
@@ -21,25 +21,19 @@ const userSchema = mongoose.Schema({
     },
     role: {
         type: String,
-        // enum: ["user", "admin"],
-        default: "user",
+        default: "admin",
     },
     contactNumber: {
         type: String,
         required: true
     },
-    // tokens: [{
-    //     token: {
-    //         type: String,
-    //         required: true
-    //     }
-    // }],
-    profilePicture: {
-        type: String
+    shopPic: {
+        type: Object,
+        required: true
     },
-    cart: {
-        type: Array,
-        default: []
+    homeDelivery: {
+        type: Boolean,
+        required: true
     },
     address: {
         city: {
@@ -54,7 +48,13 @@ const userSchema = mongoose.Schema({
             type: String,
             required: true,
         }
-    }
+    },
+    products: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Product"
+        }
+    ]
 }, { timestamps: true })
 
 
@@ -67,36 +67,37 @@ const userSchema = mongoose.Schema({
 // }
 
 
-userSchema.pre('save', async function (next) {
-    const user = this
+shopSchema.pre('save', async function (next) {
+    const shop = this
 
-    if (user.isModified('password')) {
-        user.password = await bcrypt.hash(user.password, 8)
+    if (shop.isModified('password')) {
+        shop.password = await bcrypt.hash(shop.password, 8)
     }
 
     next()
 })
 
-userSchema.statics.findByCredentials = async (email, password) => {
+shopSchema.statics.findByCredentials = async (email, password) => {
 
-    const user = await User.findOne({ email });
+    const shop = await Shop.findOne({ email });
 
-    if (!user) {
+    if (!shop) {
         throw new Error('unable to login');
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, shop.password);
 
     if (!isMatch) {
         throw new Error('unable to login');
     }
 
-    return user;
+    return shop;
 
 }
 
 
-const User = mongoose.model("User", userSchema);
+
+const Shop = mongoose.model("Shop", shopSchema);
 
 
-module.exports = User;
+module.exports = Shop;
