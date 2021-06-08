@@ -6,7 +6,7 @@ import './orderHistory.css';
 const OrderHistory = () => {
 
     const state = useContext(GlobalState);
-    const [history, setHistory] = state.User.History;
+    const [history] = state.User.History;
 
 
     return (

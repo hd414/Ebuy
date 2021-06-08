@@ -1,16 +1,17 @@
-import axios from 'axios';
+
 import React, { useEffect, useState } from 'react';
 import { createContext } from "react";
 import UserApi from '../api/auth.api.';
 import CategoriesApi from '../api/category';
 import Products from '../api/products.api';
-import axiosInstance from '../helpers/axios';
+
 
 export const GlobalState = createContext();
 
 export const GlobalData = (props) => {
 
     const [token, setToken] = useState('');
+    const [userReq, setuserReq] = useState('');
 
     // const refreshToken = async () => {
     //     const token = await axiosInstance.get('/refresh_token', {
@@ -31,10 +32,18 @@ export const GlobalData = (props) => {
         }
     }, [])
 
+
+    useEffect(() => {
+        const userreq = localStorage.getItem('UserReq');
+        if (userReq)
+            setuserReq(userreq);
+    }, [])
+
     const state = {
         Token: [token, setToken],
-        Products: Products(),
-        User: UserApi(token),
+        // shopOrUser: [user, setuser],
+        Products: Products(userReq),
+        User: UserApi(token, userReq),
         Categories: CategoriesApi()
     }
 

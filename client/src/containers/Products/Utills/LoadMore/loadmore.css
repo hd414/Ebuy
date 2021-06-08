@@ -1,0 +1,11 @@
+/* -------------------- Load More --------------- */
+.load_more{
+    text-align: center;
+}
+.load_more #load_more_btn {
+    padding: 10px 25px;
+    margin-bottom: 20px;
+    border: 1px solid #555;
+    text-transform: capitalize;
+    margin-bottom: 2rem;
+}

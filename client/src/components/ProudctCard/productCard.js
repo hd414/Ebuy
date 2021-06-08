@@ -1,29 +1,30 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import './productCard.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { GlobalState } from '../../context/globalState';
-import axiosInstance from '../../helpers/axios';
-import Loader from '../Loader/loader.component';
 
-const ProductCard = ({ product, deleteProduct, loading }) => {
+
+const ProductCard = ({ product, deleteProduct }) => {
 
     const state = useContext(GlobalState);
+    const history = useHistory();
 
-    const [isAdmin, setIsAdmin] = state.User.isAdmin;
+    const [isAdmin] = state.User.isAdmin;
     const [products, setProducts] = state.Products.products;
+    const [shopProducts, setShopProducts] = state.User.ShopProducts;
     const addToCart = state.User.addToCart;
 
 
 
 
     const CheckBoxHandler = () => {
-        const updatedProdcuts = [...products];
+        const updatedProdcuts = [...shopProducts];
         updatedProdcuts.forEach((pro) => {
             if (pro._id === product._id) {
                 pro.checked = !pro.checked;
             }
         })
-        setProducts(products => [...updatedProdcuts]);
+        setShopProducts(shopProducts => [...updatedProdcuts]);
         // console.log(products);
     }
 
@@ -34,21 +35,36 @@ const ProductCard = ({ product, deleteProduct, loading }) => {
     }
 
     const adminBtn = <>
-        <Link to='#' onClick={deleteProduct}>
-            <input className="ip-add-cart" type="button" value="Delete" />
-        </Link>
-        <Link to={`/edit_product/${product._id}`}>
-            <input className="ip-view" type="button" value="Edit" />
-        </Link>
+        <div className="product-btn-grp">
+            <Link to='#' onClick={deleteProduct}>
+                <button className="buy-product">
+                    <i className="fa fa-trash" aria-hidden="true"></i>
+
+                </button>
+                {/* <input className="ip-add-cart" type="button" value="Delete" /> */}
+            </Link>
+            <Link to={`/edit_product/${product._id}`}>
+                <button className="buy-product">
+                    <i className="fa fa-edit" aria-hidden="true"></i>
+
+                </button>
+                {/* <input className="ip-view" type="button" value="Edit" /> */}
+            </Link>
+        </div>
     </>
 
     const UserBtn = <>
-        <Link to='#' onClick={() => addToCart(product)}>
-            <input className="ip-add-cart" type="button" value="Add to cart" />
-        </Link>
-        <Link to={`/products/${product._id}`}>
-            <input className="ip-view" type="button" value="View" />
-        </Link>
+        <div className="product-btn-grp">
+            <Link to='#' onClick={() => addToCart(product)}>
+                <button className="buy-product">
+                    <i className="fa fa-shopping-cart" aria-hidden="true"></i></button>
+                {/* <input className="ip-add-cart" type="button" value="Add to cart" /> */}
+            </Link>
+            <Link to={`/products/${product._id}`}>
+                <button className="buy-product"><i className="fa fa-eye" aria-hidden="true"></i></button>
+                {/* <input className="ip-view" type="button" value="View" /> */}
+            </Link>
+        </div>
     </>
 
 
@@ -64,7 +80,7 @@ const ProductCard = ({ product, deleteProduct, loading }) => {
 
     return (
         <>
-
+            {/* 
             <div className="container">
 
                 {
@@ -76,7 +92,7 @@ const ProductCard = ({ product, deleteProduct, loading }) => {
                     />
                 }
                 <img src={product.images.url} alt="product" className="img-fruit" />
-                <h3>{product.title}</h3>
+                <h4 className="product-title">{product.title}</h4>
 
                 <p>
                     {truncate(product.description, 20)}
@@ -86,6 +102,30 @@ const ProductCard = ({ product, deleteProduct, loading }) => {
                 <h4>Price : <span>{product.price}</span></h4>
 
                 {isAdmin ? adminBtn : UserBtn}
+            </div> */}
+
+            <div className="content" >
+                {
+                    isAdmin && <input type="checkbox"
+                        className="product_checkbox"
+                        checked={product.checked}
+                        onChange={CheckBoxHandler}
+
+                    />
+                }
+                <img src={product.images.url} alt="product" className="img" />
+                <h2 className="product-title">{product.title}</h2>
+                {/* <p className="product-desc">{truncate(product.description, 20)}</p> */}
+                <h6 className="product-price">{product.price}</h6>
+                {/* <ul className="product-rating">
+                    <li><i className="fa fa-star" aria-hidden="true"></i></li>
+                    <li><i className="fa fa-star" aria-hidden="true"></i></li>
+                    <li><i className="fa fa-star" aria-hidden="true"></i></li>
+                    <li><i className="fa fa-star" aria-hidden="true"></i></li>
+                    <li><i className="fa fa-star" aria-hidden="true"></i></li>
+                </ul> */}
+                {isAdmin ? adminBtn : UserBtn}
+
             </div>
 
         </>

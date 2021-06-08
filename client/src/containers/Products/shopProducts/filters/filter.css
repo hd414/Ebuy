@@ -1,0 +1,85 @@
+/* ------------ Filters Menu ----------------- */
+.filter_menu{
+    width: 90vw;
+    font-family: 'Quattrocento Sans', sans-serif;
+
+    padding-left: 2rem;
+    /* padding-right: 1rem; */
+    min-height: 40px;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 15px 0;
+}
+.filter_menu .filter_select, .filter_input{
+    cursor: pointer;
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-bottom: 1px solid rgb(24, 26, 148);
+    background-color: rgba(255, 255, 255, 0.158);
+    color: #0d477aa1;
+    font-weight: 600;
+    outline: none;
+    height: 2rem;
+    font-size: 1.1rem;
+    padding: 0 5px;
+}
+.filter_menu .filter_input{
+    flex: 0.5;
+    margin: 1rem;
+}
+
+.filter_labels{
+    color: #1b5b94;
+    font-weight: 600;
+}
+
+.fontAwesome {
+    font-family: Helvetica, 'FontAwesome', sans-serif;
+  }
+
+  @media screen and (max-width:800px) {
+    
+    .filter_menu{
+        padding-left: 0.5rem;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    /* .fontAwesome{
+        position: absolute;
+        top: 3.5rem;
+        right: 0;
+    }
+    .filter_menu select{
+        width: 8rem;
+        margin-left: 0;
+        margin-left: 1px;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    .filter_menu select option{
+         width: 4rem;
+         font-size: 0.8rem;
+         padding-right: 0;
+    } */
+    
+ .fontAwesome{
+     order: 3;
+     align-self: center;
+     width: 60%;
+ }
+ .filter_menu .filter_select{
+     margin-bottom: 0.5rem;
+     margin-top: 0.5rem;
+ }
+
+  }
+
+
+  

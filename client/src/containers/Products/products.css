@@ -1,8 +1,16 @@
 .products-container{
-    display: flex;
+    /* display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    width: 100%;
+    justify-content: space-evenly;
+    width: 100%; */
+
+    display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      margin: 50px 0;
 }
 
 .selectAll{
@@ -11,8 +19,8 @@
 }
 
 .delete-selected{
-    color:red;
-    border:1px solid red;
+    color:#153a5b;
+    border:1px solid #153a5b;
     border-radius: 5px;
     margin-left: 1rem;
     text-transform: uppercase;

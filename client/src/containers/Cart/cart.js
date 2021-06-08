@@ -3,12 +3,11 @@ import { GlobalState } from '../../context/globalState';
 import axiosInstance from '../../helpers/axios';
 import './cart.styles.css';
 import Payment from '../payment/PaypalButton'
-import axios from 'axios';
 const Cart = () => {
 
     const state = useContext(GlobalState);
     const [cartItems, setCartItems] = state.User.cart;
-    const [trigger, setTrigger] = state.User.Trigger;
+    const [setTrigger] = state.User.Trigger;
     const [total, setTotal] = useState(0);
     const [token] = state.Token;
 
@@ -35,7 +34,7 @@ const Cart = () => {
     }
 
     const getTotal = () => {
-        const grandTotal = cartItems.reduce((acc, item) => {
+        const grandTotal = cartItems?.reduce((acc, item) => {
             return acc + (item.price * item.quantity)
         }, 0)
 
@@ -87,7 +86,7 @@ const Cart = () => {
     }, [cartItems])
 
 
-    if (cartItems.length === 0) {
+    if (cartItems?.length === 0) {
         return (
             <h1 style={{ textAlign: "center", color: "Red", fontSize: "5rem" }}>Cart is Empty</h1>
         )
@@ -105,7 +104,7 @@ const Cart = () => {
 
 
                 {
-                    cartItems.map((item) => {
+                    cartItems?.map((item) => {
                         return (
                             <div key={item._id} className="item">
                                 <div className="buttons">
@@ -118,8 +117,8 @@ const Cart = () => {
                                 </div>
 
                                 <div className="description">
-                                    <span>{item.category}</span>
-                                    <span>{item.title}</span>
+                                    {/* <span>{item.category}</span> */}
+                                    <span style={{ fontWeight: "600" }}>{item.title}</span>
                                     <span>{item.description}</span>
                                 </div>
 

@@ -1,33 +1,22 @@
 
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import axiosInstance from '../helpers/axios';
 
 const UserApi = (token) => {
-
+    let userReq = localStorage.getItem('UserReq');
     const [isAuth, setIsAuth] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const [history, setHistory] = useState([]);
     const [trigger, setTrigger] = useState(false);
+    const [shopProducts, setShopProducts] = useState([]);
+    const [shopCallback, setShopCallback] = useState(false);
+    const [user, setUser] = useState('');
+    const [Shops, setShops] = useState([]);
 
-    const getUser = async () => {
-        try {
-            const res = await axiosInstance.get('/getUser', {
-                headers: { Authorization: token }
-            });
-            // console.log(res);
-            setIsAuth(true);
-            res.data.role === 'admin' ? setIsAdmin(true) : setIsAdmin(false);
-            setCartItems(res.data.cart);
-        }
-        catch (e) {
-            console.log(e);
-        }
 
-        // setProducts(res.data.products);
-    }
 
-    const addToCart = async (product) => {
+    const addToCart = async (product, num = 1) => {
         // console.log(product);
         if (!isAuth)
             return alert("please login or Register to continue");
@@ -42,47 +31,92 @@ const UserApi = (token) => {
 
         if (check) {
             // console.log("product", product)
-            setCartItems(cartItems => [...cartItems, { ...product, quantity: 1 }]);
-            await axiosInstance.patch('/addCart', { cart: [...cartItems, { ...product, quantity: 1 }] }, {
+            setCartItems(cartItems => [...cartItems, { ...product, quantity: num + 1 - 1 }]);
+            await axiosInstance.patch('/addCart', { cart: [...cartItems, { ...product, quantity: num + 1 - 1 }] }, {
                 headers: { Authorization: token }
             })
         }
         else {
             const remains = cartItems.filter((item) => item._id !== product._id);
 
-            setCartItems(cartItems => [...remains, { ...product, quantity: quan + 1 }]);
-            await axiosInstance.patch('/addCart', { cart: [...remains, { ...product, quantity: quan + 1 }] }, {
+            setCartItems(cartItems => [...remains, { ...product, quantity: num - 1 + quan + 1 }]);
+            await axiosInstance.patch('/addCart', { cart: [...remains, { ...product, quantity: quan + num + 1 - 1 }] }, {
                 headers: { Authorization: token }
             })
         }
         // console.log("cartItems", cartItems);
     }
 
-    const getHistory = async () => {
-        let hist;
+    useEffect(async () => {
         if (isAdmin) {
-            hist = await axiosInstance.get('/payment', {
-                headers: { Authorization: token }
-            });
-        }
-        else {
-            hist = await axiosInstance.get('/history', {
-                headers: { Authorization: token }
-            });
-        }
+            const getShopProducts = async () => {
+                const res = await axiosInstance.get('/shop/' + user?._id);
+                // console.log(res.data.shop.products);
+                const prod = res.data.shop.products;
+                setShopProducts(shopProducts => [...prod]);
+            }
 
-        setHistory(hist.data)
-    }
+            await getShopProducts();
+            // console.log(shopProducts)
+
+
+        }
+    }, [isAdmin, user, shopCallback])
+
+    useEffect(async () => {
+        if (!isAdmin) {
+            const getShops = async () => {
+                const res = await axiosInstance.get('/getShops');
+                console.log(res);
+                setShops(res.data.shops);
+            }
+
+            await getShops();
+        }
+    }, [isAdmin])
 
     useEffect(async () => {
         if (token) {
 
-            await getHistory();
+            const getHistory = async () => {
+                let hist;
+                if (isAdmin) {
+                    hist = await axiosInstance.get('/payment', {
+                        headers: { Authorization: token }
+                    });
+                }
+                else {
+                    hist = await axiosInstance.get('/history', {
+                        headers: { Authorization: token }
+                    });
+                }
+
+                setHistory(hist.data)
+            }
+
+            getHistory();
 
         }
     }, [token, trigger, isAdmin])
 
     useEffect(() => {
+        const getUser = async () => {
+            try {
+                const res = await axiosInstance.get(`/${userReq}`, {
+                    headers: { Authorization: token }
+                });
+                // console.log(res);
+                setIsAuth(true);
+                setUser(res.data);
+                res.data.role === 'admin' ? setIsAdmin(true) : setIsAdmin(false);
+                setCartItems(res.data.cart);
+            }
+            catch (e) {
+                console.log(e);
+            }
+
+            // setProducts(res.data.products);
+        }
         getUser();
     }, [token])
 
@@ -92,8 +126,10 @@ const UserApi = (token) => {
         cart: [cartItems, setCartItems],
         addToCart: addToCart,
         History: [history, setHistory],
-        Trigger: [trigger, setTrigger]
-
+        Trigger: [trigger, setTrigger],
+        ShopProducts: [shopProducts, setShopProducts],
+        ShopCallback: [shopCallback, setShopCallback],
+        Shops: [Shops, setShops],
     }
 }
 

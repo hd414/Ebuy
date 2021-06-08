@@ -4,6 +4,8 @@ import ProductCard from '../../components/ProudctCard/productCard';
 import { GlobalState } from '../../context/globalState';
 import axiosInstance from '../../helpers/axios';
 import './products.css';
+import Filters from './Utills/Filter/filter';
+import LoadMore from './Utills/LoadMore/loadmore';
 
 
 const Products = () => {
@@ -66,6 +68,7 @@ const Products = () => {
     }
     return (
         <>
+            <Filters />
             {
                 isAdmin &&
                 <div className="selectAll">
@@ -78,6 +81,7 @@ const Products = () => {
                 </div>
             }
             {products.length === 0 && <Loader />}
+
             <div className="products-container">
                 {
                     products.map((product) => {
@@ -88,6 +92,7 @@ const Products = () => {
                     })
                 }
             </div>
+            <LoadMore />
         </>
     )
 }

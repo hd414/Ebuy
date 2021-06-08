@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import axiosInstance from '../helpers/axios';
 
 const Products = () => {
@@ -16,7 +16,8 @@ const Products = () => {
         const getProducts = async () => {
             const res = await axiosInstance.get(`/products?limit=${page * 9}&${category}&${sort}&title[regex]=${search}`)
             setProducts(res.data.products)
-            setResult(res.data.result)
+
+            setResult(res.data.results)
         }
         getProducts()
     }, [callback, category, sort, search, page])

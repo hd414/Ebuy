@@ -9,7 +9,6 @@ const CreateProduct = () => {
 
 
     const InititalState = {
-        product_id: '',
         title: "",
         price: 0,
         description: "",
@@ -30,14 +29,16 @@ const CreateProduct = () => {
     const history = useHistory()
     const param = useParams()
 
-    const [products] = state.Products.products;
+    // const [products] = state.Products.products;
     const [onEdit, setOnEdit] = useState(false)
-    const [callback, setCallback] = state.Products.callback
+    const [shopProducts, setShopProducts] = state.User.ShopProducts;
+    const [shopCallback, setShopCallback] = state.User.ShopCallback;
+    // const [callback, setCallback] = state.Products.callback
 
     useEffect(() => {
         if (param.id) {
             setOnEdit(true)
-            products.forEach(product => {
+            shopProducts.forEach(product => {
                 if (product._id === param.id) {
                     setProduct(product)
                     setImages(product.images)
@@ -48,7 +49,7 @@ const CreateProduct = () => {
             setProduct(InititalState)
             setImages(false)
         }
-    }, [param.id, products])
+    }, [param.id, shopProducts])
 
     const handleUpload = async e => {
         e.preventDefault()
@@ -113,7 +114,9 @@ const CreateProduct = () => {
                     headers: { Authorization: token }
                 })
             }
-            setCallback(!callback)
+            setShopCallback(!shopCallback)
+            if (onEdit)
+                history.push('/shop_products')
             // history.push("/")
         } catch (err) {
             // console.log(err.data.error);
@@ -140,11 +143,6 @@ const CreateProduct = () => {
             </div>
 
             <form onSubmit={handleSubmit}>
-                <div className="row">
-                    <label htmlFor="product_id">Product ID</label>
-                    <input type="text" name="product_id" id="product_id" required
-                        value={product.product_id} onChange={handleChangeInput} disabled={onEdit} />
-                </div>
 
                 <div className="row">
                     <label htmlFor="title">Title</label>

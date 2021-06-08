@@ -1,0 +1,101 @@
+
+
+.wrapper {
+  font-family: 'Quattrocento Sans', cursive, sans-serif;
+  width: 250px;
+  height: 400px;
+  background: white;
+  margin: auto;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px 10px 10px 10px;
+  box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.2);
+  transform: scale(0.95);
+  transition: box-shadow 0.5s, transform 0.5s;
+}
+.wrapper:hover {
+  transform: scale(1);
+  box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.2);
+}
+.wrapper .container {
+  width: 100%;
+  height: 100%;
+}
+.wrapper .container .top {
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+}
+.wrapper .container .bottom {
+  /* width: 200%; */
+  margin-top: 0.5rem;
+  height: 20%;
+  transition: transform 0.5s;
+}
+.wrapper .container .bottom.clicked {
+  transform: translateX(-50%);
+}
+.wrapper .container .bottom h1 {
+  margin: 0;
+  padding: 0;
+}
+.wrapper .container .bottom p {
+  margin: 0;
+  padding: 0;
+}
+
+.details{
+  text-align: center;
+}
+
+.wrapper .inside {
+  z-index: 9;
+  /* background: #1a2079; */
+  background: #153a5b;
+  width: 140px;
+  height: 140px;
+  position: absolute;
+  top: -80px;
+  right: -70px;
+  border-radius: 0px 0px 200px 200px;
+  transition: all 0.5s, border-radius 1s, top 1.5s;
+  overflow: hidden;
+}
+.wrapper .inside .icon {
+  position: absolute;
+  right: 85px;
+  top: 95px;
+  color: white;
+  opacity: 1;
+}
+.wrapper .inside:hover {
+  width: 100%;
+  right: 0;
+  top: 0;
+  border-radius: 0;
+  height: 80%;
+  /* background-color: rgba(31, 45, 170, 0.651); */
+  background: #153a5baf;
+  text-align: center;
+
+}
+.wrapper .inside:hover .icon {
+  opacity: 0;
+  right: 15px;
+  top: 15px;
+}
+.wrapper .inside:hover .contents {
+  opacity: 1;
+  transform: scale(1);
+  transform: translateY(0);
+}
+.wrapper .inside .contents {
+  color: rgb(255, 255, 255);
+  border-radius: 20px;
+  line-height: 1.3rem;
+  padding: 5%;
+  opacity: 0;
+  transform: scale(0.5);
+  transform: translateY(-200%);
+  transition: opacity 0.2s, transform 0.8s;
+}

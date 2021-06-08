@@ -1,8 +1,9 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import menu from '../../assets/images/menu.png';
-import cart from '../../assets/images/cart.png';
+// import cart from '../../assets/images/cart.png';
+import { ReactComponent as Cart } from '../../assets/svgs/cart.svg';
 import close from '../../assets/images/cancel.png';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import './Navbar.styles.css';
 import { GlobalState } from '../../context/globalState';
 import axiosInstance from '../../helpers/axios';
@@ -10,10 +11,14 @@ import axiosInstance from '../../helpers/axios';
 const Navbar = () => {
 
     const state = useContext(GlobalState);
-    console.log(state);
+    // console.log(state);
     const [isAuth, setIsAuth] = state.User.Auth;
     const [isAdmin, setIsAdmin] = state.User.isAdmin;
     const [cartItems, setCartItems] = state.User.cart;
+    const [showMenu, setShowMenu] = useState(false);
+
+
+
 
 
 
@@ -28,8 +33,9 @@ const Navbar = () => {
     const AdminRoute = () => {
         return (
             <>
-                <li><Link to="/create_product">Create Product</Link></li>
-                <li><Link to="/category">Categories</Link></li>
+                <li><NavLink to="/shop_products">products</NavLink></li>
+                <li><NavLink to="/create_product">Create Product</NavLink></li>
+                <li><NavLink to="/category">Categories</NavLink></li>
             </>
         )
     }
@@ -39,35 +45,37 @@ const Navbar = () => {
     const LoggedInRoute = () => {
         return (
             <>
-                <li><Link to="/history">History</Link></li>
+                <li><NavLink to="/history">History</NavLink></li>
                 <li><Link to="/" onClick={logout}>Logout</Link></li>
             </>
         )
     }
 
+    let menuStyle = { left: showMenu ? "-50%" : "-100%" }
 
     return (
 
         <nav className="navbar">
-            <div className="menu">
-                <Link to='/'><img src={menu} width="30px" alt="menu" /></Link>
+            <div className="menu" onClick={() => { setShowMenu(!showMenu) }}>
+                <Link to='#'><img src={menu} width="30px" alt="menu" /></Link>
             </div>
             <div className="logo">
-                <h1><Link to="/">{isAdmin ? 'Admin LocalMart' : 'LocalMart'}</Link> </h1>
+                <h2><Link to="/">{isAdmin ? 'Admin LocalMart' : 'LocalMart'}</Link> </h2>
             </div>
             <div className="pages">
-                <ul>
-                    <li><Link to="/products">products</Link></li>
+                <ul style={menuStyle}>
+
+                    {!isAdmin && <li><NavLink to="/products">products</NavLink></li>}
                     {isAdmin && AdminRoute()}
                     {
                         isAuth ? LoggedInRoute() : (
                             <>
-                                <li><Link to="/signin">Login</Link></li>
-                                <li><Link to="/signup">SignUp</Link></li>
+                                <li><NavLink to="/signin">Login</NavLink></li>
+                                <li><NavLink to="/signup">SignUp</NavLink></li>
                             </>
                         )
                     }
-                    <li>
+                    <li onClick={() => { setShowMenu(!showMenu) }}>
                         <img src={close} alt="close" width="30px" className="menu" />
                     </li>
                 </ul>
@@ -75,8 +83,9 @@ const Navbar = () => {
 
             { isAdmin ? '' : (
                 <div className="cart">
-                    <span className="quantity">{cartItems.length}</span>
-                    <Link to='/cart'><img src={cart} width="40px" alt="cart" /></Link>
+                    <span className="quantity">{cartItems?.length}</span>
+
+                    <Link to='/cart'><Cart /></Link>
                 </div>
             )}
 

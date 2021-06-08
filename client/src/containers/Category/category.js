@@ -16,12 +16,12 @@ const Category = () => {
         e.preventDefault()
         try {
             if (onEdit) {
-                const res = await axiosInstance.put(`/category/${id}`, { name: category }, {
+                await axiosInstance.put(`/category/${id}`, { name: category }, {
                     headers: { Authorization: token }
                 })
                 alert("category updated")
             } else {
-                const res = await axiosInstance.post('/category/create', { name: category }, {
+                await axiosInstance.post('/category/create', { name: category }, {
                     headers: { Authorization: token }
                 })
                 alert("category created")
@@ -43,13 +43,13 @@ const Category = () => {
 
     const deleteCategory = async id => {
         try {
-            const res = await axiosInstance.delete(`/category/${id}`, {
+            await axiosInstance.delete(`/category/${id}`, {
                 headers: { Authorization: token }
             })
             alert("category deleted")
             setCallback(!callback)
         } catch (err) {
-            alert(err.response.data.msg)
+            return alert(err.response.data.msg)
         }
     }
 

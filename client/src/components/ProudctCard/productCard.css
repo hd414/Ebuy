@@ -1,33 +1,36 @@
-div.container {
+/* div.container {
     position: relative;
-    margin: 5rem auto;
-    width: 22rem;
-    height: 24rem;
+    margin: 5rem 2rem;
+    width: 20rem;
+    height: 18rem;
     text-align: center;
-    background: #fff;
-    -moz-box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1), 0px 60px 75px -25px rgba(0, 0, 0, 0.2);
-    -webkit-box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1), 0px 60px 75px -25px rgba(0, 0, 0, 0.2);
-    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1), 0px 60px 75px -25px rgba(0, 0, 0, 0.2);
+    background: rgba(209, 231, 250, 0.068);
+    -moz-box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1), 0px 50px 75px -25px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1), 0px 50px 75px -25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1), 0px 30px 25px -25px rgba(0, 0, 0, 0.2);
     cursor: default;
+    font-family: 'Quattrocento Sans', sans-serif;
+    letter-spacing: 0.2px;
   }
   div.container img.img-fruit {
-    width: 18rem;
-    height: 12rem;
-    margin-top: -60px;
-    border-radius: 20px;
+    width: 70%;
+    height: 70%;
+    margin-top: -50px;
+
   }
 
   div.container h3 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     letter-spacing: 3px;
-    margin-top: 0.5rem;
-    color: #ea1d24;
+    margin-top: 0.0rem;
+    margin-bottom: 0.1rem;
+    color: rgb(41, 36, 36);
   }
   div.container p {
     font-size: 1.1rem;
     padding: 0.1rem 45px;
     color: #878787;
-    line-height: 22px;
+  
   }
 
   div.container .ip-add-cart ,div.container .ip-view{
@@ -55,7 +58,7 @@ div.container {
     max-width: 10rem;
   }
   div.container .ip-add-cart:hover, div.container .ip-view:hover {
-    background: #da1920;
+    background: #153a5b;
   }
   
   div.container .ip-view{
@@ -73,6 +76,11 @@ div.container {
       margin-right: 0.3rem;
   }
 
+  .product-title{
+    position: absolute;
+    top: -5rem;
+  }
+
   
  .container .product_checkbox{
    position: absolute;
@@ -80,5 +88,131 @@ div.container {
    width: 2rem;
    height: 2rem;
    left: 0;
-   color: #da1920;
- }
+   color: #153a5b;
+ } */
+
+
+ .container .product_checkbox{
+  position: absolute;
+  top: 0;
+  width: 2rem;
+  height: 2rem;
+  left: 0;
+  color: #153a5b;
+}
+
+ .content{
+  width: 20%;
+  margin: 1rem;
+  box-sizing: border-box;
+  float: left;
+  text-align: center;
+  border-radius:0.6rem;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding-top: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: .4s;
+  cursor: pointer;
+  }
+  .content:hover{
+  box-shadow: 10px -5px 32px rgba(33,33,33,.2);
+  transform: translate(0px, -2px);
+  transition: .6s;
+  }
+  .img{
+  width: 80%;
+  /* height: 100%; */
+  min-height: 12rem;
+  text-align: center;
+  margin: 0 auto;
+  display: block;
+  }
+  .product-desc{
+  text-align: center;
+  color: #b2bec3;
+  padding: 0 8px;
+  }
+  .product-price{
+  font-size: 1.5rem;
+  text-align: center;
+  color: #222f3e;
+  margin: 0;
+  margin-bottom: 10px;
+  
+  }
+
+  .product-price::before{
+    content: '\20B9 ';
+    margin-right: 0.3rem;
+}
+
+ul.product-rating{
+  /* width: 70%; */
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  }
+  ul.product-rating li{
+  padding: 5px;
+  /* width: 60%; */
+  }
+  .fa{
+  color: #f3831a;
+  font-size: 1.2rem;
+  transition: .4s;
+  }
+  .fa-shopping-cart,.fa-eye,.fa-trash,.fa-edit{
+    font-size: 1.7rem;
+  }
+  .fa:hover{
+  transform: translateY(-7px);
+  transition: .6s;
+  }
+  button.buy-product{
+  text-align: center;
+  font-size: 24px;
+  color: #fff;
+  width: 100%;
+  /* padding: 1rem;
+  padding-top: 0.5rem; */
+  padding-bottom: 2rem;
+  width: 6rem;
+  border:0px;
+  outline: none;
+  cursor: pointer;
+  margin-top: 5px;
+  border-radius: 10px;
+  /* border-bottom-right-radius: 10px; */
+  /* border-bottom-left-radius: 10px; */
+  }
+  .buy-product{
+  /* background-color: #2e21a2; */
+  /* padding: 1rem; */
+  /* width: 3rem; */
+  }
+
+
+
+  .product-btn-grp{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 0.5rem;
+    background-color: #2e21a2;
+    border-radius: 20px;
+  }
+
+  @media(max-width: 1000px){
+  .content{
+  width: 30%;
+  }
+  }
+  @media(max-width: 700px){
+  .content{
+  width: 40%;
+  }
+  }

@@ -37,7 +37,7 @@ function Filters() {
 
             <div className="row sort">
                 <span className="filter_labels">Sort By: </span>
-                <select className="filter_select" value={sort} onChange={e => setSort(e.target.value)} >
+                <select className="filter_select" onChange={e => setSort(e.target.value)} >
                     <option value=''>Newest</option>
                     <option value='sort=oldest'>Oldest</option>
                     <option value='sort=-sold'>Best sales</option>

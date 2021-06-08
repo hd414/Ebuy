@@ -4,17 +4,14 @@ import 'normalize.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
-import { GlobalStyles } from './globalStyles';
 import { GlobalData } from './context/globalState';
 
 ReactDOM.render(
   <BrowserRouter>
     <React.StrictMode>
-      {/* <GlobalStyles> */}
       <GlobalData>
         <App />
       </GlobalData>
-      {/* </GlobalStyles> */}
     </React.StrictMode>
   </BrowserRouter>,
   document.getElementById('root')

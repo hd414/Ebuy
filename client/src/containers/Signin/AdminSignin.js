@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import axiosInstance from '../../helpers/axios';
 import './signin.styles.css';
-const Signin = () => {
+const AdminSignin = () => {
 
 
     const [User, setUser] = useState({
@@ -21,15 +21,12 @@ const Signin = () => {
     const FormSubmitHandler = async (e) => {
         e.preventDefault();
         try {
-            // console.log(User)
-            const res = await axiosInstance.post('/signin', { ...User });
-            const user = res.data.user;
+
+            const res = await axiosInstance.post('/admin/signin', { ...User });
+            const shop = res.data.shop;
             const accessToken = res.data.accessToken;
             localStorage.setItem('accessToken', accessToken);
-            localStorage.setItem('UserReq', "getUser");
-            // localStorage.setItem('user', JSON.stringify(user));
-            // console.log(user, token)
-            // localStorage.setItem('firstLogin', true);
+            localStorage.setItem('UserReq', "getShop");
 
             window.location.href = "/";
         }
@@ -42,7 +39,7 @@ const Signin = () => {
         <div className="Formcontainer">
             <div className="left">
                 <div className="Formheader">
-                    <h2 className="animation a1">Welcome Back </h2>
+                    <h2 className="animation a1">Seller Panel</h2>
                     <h4 className="animation a2">SignIn using email and password</h4>
                 </div>
 
@@ -59,4 +56,4 @@ const Signin = () => {
 }
 
 
-export default Signin
+export default AdminSignin
