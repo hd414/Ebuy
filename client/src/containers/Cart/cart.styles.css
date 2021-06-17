@@ -1,6 +1,5 @@
 .shopping-cart {
-    width: 750px;
-    height: 423px;
+    max-width: 900px;
     margin: 80px auto;
     background: #FFFFFF;
     box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.10);
@@ -178,4 +177,8 @@
       padding-top: 1rem;
       padding-bottom: 1rem;
     }
+  }
+
+  .cartShopName{
+    
   }

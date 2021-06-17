@@ -79,7 +79,8 @@ const ShopDetails = () => {
                 </div> */}
             </div>
 
-            {products.length === 0 && <h2>Currently service or products is not available </h2>}
+            {products.length === 0 ? <h1 style={{ marginLeft: "3rem" }}>Currently service or products is not available </h1>
+                : <h1 style={{ marginLeft: "3rem" }}>Available Products</h1>}
 
             {
                 products.map((product) => {

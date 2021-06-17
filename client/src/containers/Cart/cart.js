@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { GlobalState } from '../../context/globalState';
 import axiosInstance from '../../helpers/axios';
 import './cart.styles.css';
-import Payment from '../payment/PaypalButton'
+import Payment from '../payment/PaypalButton';
+
 const Cart = () => {
 
     const state = useContext(GlobalState);
@@ -10,7 +11,40 @@ const Cart = () => {
     const [setTrigger] = state.User.Trigger;
     const [total, setTotal] = useState(0);
     const [token] = state.Token;
+    const [Shops, setShops] = state.User.Shops;
+    const [cartitems, setcartitems] = useState({});
+    const [shopsMap, setShopsMap] = useState(new Map());
+    const [cartShopMap, setcartShopMap] = useState(new Map());
 
+
+    useEffect(() => {
+        let a = new Map();
+        Shops.forEach((shop) => {
+            a[shop._id] = shop;
+        })
+        setShopsMap(a);
+        console.log(shopsMap)
+    }, [Shops])
+
+
+
+
+    useEffect(() => {
+        const a = {};
+        console.log(cartItems);
+        // const b = cartShopMap;
+        cartItems.forEach((item) => {
+            if (a[item?.shop] === undefined)
+                a[item?.shop] = new Set()
+
+            // b[item?.shop] = shopsMap[item?.shop];
+            a[item?.shop].add(item);
+        });
+        setcartitems(a);
+        // setcartShopMap(b);
+        console.log(cartitems)
+
+    }, [cartItems])
 
 
 
@@ -40,6 +74,8 @@ const Cart = () => {
 
         setTotal(grandTotal)
     }
+
+
 
     const RemoveItem = (item) => {
         if (window.confirm("Do you want to delete this item from the cart")) {
@@ -92,58 +128,118 @@ const Cart = () => {
         )
     }
 
+    const getAmount = (value) => {
+        let amount = 0;
+        [...value].forEach((item) => {
+            amount += item.price * item.quantity;
+        })
+
+        return amount;
+    }
 
 
     return (
         <>
-            <div className="shopping-cart">
+            <div >
 
-                <div className="title">
+                <div className="title" style={{ fontSize: "2rem", magin: "1rem auto" }}>
                     Shopping Bag
                 </div>
-
-
                 {
-                    cartItems?.map((item) => {
+                    Object.entries(cartitems).map(([key, value]) => {
+
                         return (
-                            <div key={item._id} className="item">
-                                <div className="buttons">
-                                    <span className="delete-btn" onClick={() => RemoveItem(item)}>X</span>
-                                    <span className="like-btn"></span>
-                                </div>
+                            <div className="shopping-cart" key={key}>
+                                <h1 className="cartShopName">{shopsMap[key]?.shopName.toUpperCase()}</h1>
+                                {shopsMap[key]?.homeDelivery ? <span class="stock"> Home Delivery Available &#128077; </span>
+                                    : <span class="stock" style={{ color: 'red' }}> Home Delivery Not Available &#128542; </span>
+                                }
 
-                                <div className="image">
-                                    <img src={item.images.url} height="100%" alt="" />
-                                </div>
+                                {
+                                    [...value].map((item) => {
+                                        return (
+                                            <div key={item._id} className="item">
+                                                <div className="buttons">
+                                                    <span className="delete-btn" onClick={() => RemoveItem(item)}>X</span>
+                                                    <span className="like-btn"></span>
+                                                </div>
 
-                                <div className="description">
-                                    {/* <span>{item.category}</span> */}
-                                    <span style={{ fontWeight: "600" }}>{item.title}</span>
-                                    <span>{item.description}</span>
-                                </div>
+                                                <div className="image">
+                                                    <img src={item.images.url} height="100%" alt="" />
+                                                </div>
 
-                                <div className="quantity">
-                                    <button className="plus-btn" type="button" name="button" onClick={() => increment(item)}>
-                                        +
-                                   </button>
-                                    <input type="text" name="name" value={item.quantity} onChange={() => { }} />
-                                    <button className="minus-btn" type="button" name="button" onClick={() => decrement(item)}>
-                                        {/* <img src="minus.svg" alt="" /> */}
-                                     -
-                                    </button>
-                                </div>
+                                                <div className="description">
+                                                    {/* <span>{item.category}</span> */}
+                                                    <span style={{ fontWeight: "600" }}>{item.title}</span>
+                                                    <span>{item.description}</span>
+                                                </div>
 
-                                <div className="total-price">{item.price * item.quantity}</div>
+                                                <div className="quantity">
+                                                    <button className="plus-btn" type="button" name="button" onClick={() => increment(item)}>
+                                                        +
+                                                    </button>
+                                                    <input type="text" name="name" value={item.quantity} onChange={() => { }} />
+                                                    <button className="minus-btn" type="button" name="button" onClick={() => decrement(item)}>
+                                                        {/* <img src="minus.svg" alt="" /> */}
+                                                        -
+                                                    </button>
+                                                </div>
+
+                                                <div className="total-price">{item.price * item.quantity}</div>
+                                            </div>
+                                        )
+                                    })
+                                }
+
+                                <h3 style={{ padding: "0.5rem" }}>Total : {getAmount(value)}</h3>
                             </div>
                         )
                     })
                 }
 
-                <div>
-                    Total :{total}
-                </div>
+                {
 
-                <Payment total={total} transferSuccess={transferSuccess} />
+                    // cartItems?.map((item) => {
+                    //     return (
+                    //         <div key={item._id} className="item">
+                    //             <div className="buttons">
+                    //                 <span className="delete-btn" onClick={() => RemoveItem(item)}>X</span>
+                    //                 <span className="like-btn"></span>
+                    //             </div>
+
+                    //             <div className="image">
+                    //                 <img src={item.images.url} height="100%" alt="" />
+                    //             </div>
+
+                    //             <div className="description">
+
+                    //                 <span style={{ fontWeight: "600" }}>{item.title}</span>
+                    //                 <span>{item.description}</span>
+                    //             </div>
+
+                    //             <div className="quantity">
+                    //                 <button className="plus-btn" type="button" name="button" onClick={() => increment(item)}>
+                    //                     +
+                    //                 </button>
+                    //                 <input type="text" name="name" value={item.quantity} onChange={() => { }} />
+                    //                 <button className="minus-btn" type="button" name="button" onClick={() => decrement(item)}>
+                    //                     {/* <img src="minus.svg" alt="" /> */}
+                    //                     -
+                    //                 </button>
+                    //             </div>
+
+                    //             <div className="total-price">{item.price * item.quantity}</div>
+                    //         </div>
+                    //     )
+                    // })
+                }
+
+                <div style={{ textAlign: "center" }}>
+                    <h2>
+                        Grand Total :{total}
+                    </h2>
+                </div>
+                {/* <Payment total={total} transferSuccess={transferSuccess} /> */}
 
             </div>
 

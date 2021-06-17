@@ -44,7 +44,6 @@ const UserApi = (token) => {
                 headers: { Authorization: token }
             })
         }
-        // console.log("cartItems", cartItems);
     }
 
     useEffect(async () => {
@@ -67,7 +66,7 @@ const UserApi = (token) => {
         if (!isAdmin) {
             const getShops = async () => {
                 const res = await axiosInstance.get('/getShops');
-                console.log(res);
+                // console.log(res);
                 setShops(res.data.shops);
             }
 

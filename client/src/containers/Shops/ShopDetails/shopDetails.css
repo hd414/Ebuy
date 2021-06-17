@@ -88,8 +88,9 @@
   font-size: 26px;
 }
 .Shop .Shop__body .image {
-  padding-top: 15px;
+  padding: 15px;
   width: 100%;
+  
 }
 .Shop .Shop__body .image img {
   display: block;
