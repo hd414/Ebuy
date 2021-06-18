@@ -13,6 +13,8 @@ const UserApi = (token) => {
     const [shopCallback, setShopCallback] = useState(false);
     const [user, setUser] = useState('');
     const [Shops, setShops] = useState([]);
+    const [userhistory, setUserHistory] = useState([]);
+    const [adminHistory, setAdminHistory] = useState([]);
 
 
 
@@ -67,12 +69,39 @@ const UserApi = (token) => {
             const getShops = async () => {
                 const res = await axiosInstance.get('/getShops');
                 // console.log(res);
-                setShops(res.data.shops);
+                setShops(Shops => res.data.shops);
+                // console.log(Shops)
             }
 
             await getShops();
         }
     }, [isAdmin])
+
+    // useEffect(async () => {
+    //     if (token) {
+
+    //         const getHistory = async () => {
+    //             let hist;
+    //             if (isAdmin) {
+    //                 hist = await axiosInstance.get('/payment', {
+    //                     headers: { Authorization: token }
+    //                 });
+    //             }
+    //             else {
+    //                 hist = await axiosInstance.get('/history', {
+    //                     headers: { Authorization: token }
+    //                 });
+    //             }
+
+    //             setHistory(hist.data)
+    //         }
+
+    //         getHistory();
+
+    //     }
+    // }, [token, trigger, isAdmin])
+
+
 
     useEffect(async () => {
         if (token) {
@@ -80,12 +109,12 @@ const UserApi = (token) => {
             const getHistory = async () => {
                 let hist;
                 if (isAdmin) {
-                    hist = await axiosInstance.get('/payment', {
+                    hist = await axiosInstance.get('/orders/admin', {
                         headers: { Authorization: token }
                     });
                 }
                 else {
-                    hist = await axiosInstance.get('/history', {
+                    hist = await axiosInstance.get('/orders/user', {
                         headers: { Authorization: token }
                     });
                 }
@@ -97,6 +126,9 @@ const UserApi = (token) => {
 
         }
     }, [token, trigger, isAdmin])
+
+
+
 
     useEffect(() => {
         const getUser = async () => {

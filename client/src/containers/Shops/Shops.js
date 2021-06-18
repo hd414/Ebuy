@@ -10,7 +10,7 @@ const Shops = () => {
 
 
     return (
-        <div className="shops_container">
+        <div id="shops" className="shops_container">
 
             {
                 Shops.map((shop) => {

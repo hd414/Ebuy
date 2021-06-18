@@ -8,13 +8,12 @@ const Cart = () => {
 
     const state = useContext(GlobalState);
     const [cartItems, setCartItems] = state.User.cart;
-    const [setTrigger] = state.User.Trigger;
+    const [trigger, setTrigger] = state.User.Trigger;
     const [total, setTotal] = useState(0);
     const [token] = state.Token;
     const [Shops, setShops] = state.User.Shops;
     const [cartitems, setcartitems] = useState({});
     const [shopsMap, setShopsMap] = useState(new Map());
-    const [cartShopMap, setcartShopMap] = useState(new Map());
 
 
     useEffect(() => {
@@ -116,6 +115,17 @@ const Cart = () => {
         setCartItems(newCartItems)
     }
 
+    const placeOrder = async (shop, cart) => {
+
+        const cartItems = [...cart];
+        const res = await axiosInstance.post('/orders', { cartItems, shop }, {
+            headers: { Authorization: token }
+        })
+        setTrigger(trigger => !trigger);
+        alert("order placed")
+        console.log(res);
+    }
+
     useEffect(() => {
         getTotal();
         changeInCart(cartItems);
@@ -151,8 +161,8 @@ const Cart = () => {
                         return (
                             <div className="shopping-cart" key={key}>
                                 <h1 className="cartShopName">{shopsMap[key]?.shopName.toUpperCase()}</h1>
-                                {shopsMap[key]?.homeDelivery ? <span class="stock"> Home Delivery Available &#128077; </span>
-                                    : <span class="stock" style={{ color: 'red' }}> Home Delivery Not Available &#128542; </span>
+                                {shopsMap[key]?.homeDelivery ? <span className="stock"> Home Delivery Available &#128077; </span>
+                                    : <span className="stock" style={{ color: 'red' }}> Home Delivery Not Available &#128542; </span>
                                 }
 
                                 {
@@ -165,7 +175,7 @@ const Cart = () => {
                                                 </div>
 
                                                 <div className="image">
-                                                    <img src={item.images.url} height="100%" alt="" />
+                                                    <img src={item.images.url} height="80%" alt="" />
                                                 </div>
 
                                                 <div className="description">
@@ -191,7 +201,11 @@ const Cart = () => {
                                     })
                                 }
 
-                                <h3 style={{ padding: "0.5rem" }}>Total : {getAmount(value)}</h3>
+                                <div className="payment-price">
+                                    <h3 className="cart-total">Total : {getAmount(value)}</h3>
+                                    <button className="order-btn" onClick={() => { return placeOrder(key, value) }}>Order</button>
+                                </div>
+
                             </div>
                         )
                     })
@@ -234,10 +248,11 @@ const Cart = () => {
                     // })
                 }
 
-                <div style={{ textAlign: "center" }}>
+                <div className="grandTotal-price-order" style={{ textAlign: "center" }}>
                     <h2>
                         Grand Total :{total}
                     </h2>
+                    <button className="order-btn">Order</button>
                 </div>
                 {/* <Payment total={total} transferSuccess={transferSuccess} /> */}
 

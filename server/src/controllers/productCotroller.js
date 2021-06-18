@@ -70,7 +70,9 @@ exports.getProduct = async (req, res) => {
 exports.getProducts = async (req, res) => {
     try {
         // res.send("get products");
-        const operations = new Operations(Product.find({}), req.query)
+        const operations = new Operations(Product.find()
+            // .populate({ path: 'shop', select: 'shopName' })
+            , req.query)
             .filtering().sorting().pagination();
         const products = await operations.query;
 

@@ -76,6 +76,7 @@
 
   .image {
     margin-right: 50px;
+    width: 25%;
   }
    
   .description {
@@ -151,7 +152,7 @@
       overflow: hidden;
     }
     .image img {
-      width: 50%;
+      width: 40%;
     }
     .image,
     .quantity,
@@ -179,6 +180,33 @@
     }
   }
 
-  .cartShopName{
-    
+  .payment-price{
+     display: flex;
+     justify-content: space-between;
+     flex-direction: row;
+     flex-wrap: wrap;
+     margin-left: 1rem ;
+     margin-right: 1rem;
+     align-items: center;
+  }
+
+  .payment-price .order-btn,.grandTotal-price-order .order-btn{
+    background-color:#153a5b ;
+    color: white;
+    width: fit-content;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 1.1px;
+  }
+  
+  .grandTotal-price-order .order-btn{
+    padding-right: 3rem;
+    padding-left: 3rem;
+    font-size: 1.2rem;
+  }
+
+  .payment-price .order-btn:hover,.grandTotal-price-order .order-btn:hover{
+    background-color:#0b2c49 ;
+    box-shadow: 0 0 3px black;
   }
