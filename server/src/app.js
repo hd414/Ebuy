@@ -12,6 +12,7 @@ const uploadRouter = require('./routes/uploads');
 const productRouter = require('./routes/productRoutes');
 const paymentRouter = require('./routes/paymentRoute');
 const shopRouter = require('./routes/shopRoutes');
+const orderRouter = require('./routes/orderRoutes');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use('/api', categoryRouter);
 app.use('/api', uploadRouter);
 app.use('/api', productRouter);
 app.use('/api', shopRouter);
+app.use('/api', orderRouter);
 
 
 mongoose.connect(process.env.MONGODB_URL, {

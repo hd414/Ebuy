@@ -140,3 +140,14 @@ exports.getHistory = async (req, res) => {
         res.status(500).json({ error: e.message });
     }
 }
+
+exports.getUserData = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const res = await User.findById(id).select({ "_id": 0, "name": 1, "address": 1 });
+        res.status(200).json({ res });
+    }
+    catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+}
