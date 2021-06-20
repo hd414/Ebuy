@@ -15,6 +15,10 @@ const productSchema = mongoose.Schema({
         trim: true,
         required: true
     },
+    quantity: {
+        type: String,
+        required: true
+    },
     description: {
         type: String,
         required: true

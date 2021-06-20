@@ -38,14 +38,14 @@ const ProductCard = ({ product, deleteProduct }) => {
         <div className="product-btn-grp">
             <Link to='#' onClick={deleteProduct}>
                 <button className="buy-product">
-                    <i className="fa fa-trash" aria-hidden="true"></i>
+                    <i className="fa fa-trash ficon" aria-hidden="true"></i>
 
                 </button>
                 {/* <input className="ip-add-cart" type="button" value="Delete" /> */}
             </Link>
             <Link to={`/edit_product/${product._id}`}>
                 <button className="buy-product">
-                    <i className="fa fa-edit" aria-hidden="true"></i>
+                    <i className="fa fa-edit ficon" aria-hidden="true"></i>
 
                 </button>
                 {/* <input className="ip-view" type="button" value="Edit" /> */}
@@ -57,11 +57,11 @@ const ProductCard = ({ product, deleteProduct }) => {
         <div className="product-btn-grp">
             <Link to='#' onClick={() => addToCart(product)}>
                 <button className="buy-product">
-                    <i className="fa fa-shopping-cart" aria-hidden="true"></i></button>
+                    <i className="fa fa-shopping-cart ficon" aria-hidden="true"></i></button>
                 {/* <input className="ip-add-cart" type="button" value="Add to cart" /> */}
             </Link>
             <Link to={`/products/${product._id}`}>
-                <button className="buy-product"><i className="fa fa-eye" aria-hidden="true"></i></button>
+                <button className="buy-product"><i className="fa fa-eye ficon" aria-hidden="true"></i></button>
                 {/* <input className="ip-view" type="button" value="View" /> */}
             </Link>
         </div>
@@ -116,7 +116,10 @@ const ProductCard = ({ product, deleteProduct }) => {
                 <img src={product.images.url} alt="product" className="img" />
                 <h2 className="product-title">{product.title}</h2>
                 {/* <p className="product-desc">{truncate(product.description, 20)}</p> */}
-                <h6 className="product-price">{product.price}</h6>
+                <div className="product-price" style={{ fontSize: "1.2rem", fontWeight: "600" }}>
+                    <span>{product.price}</span>
+                    <span>{product.quantity}</span>
+                </div>
                 {/* <ul className="product-rating">
                     <li><i className="fa fa-star" aria-hidden="true"></i></li>
                     <li><i className="fa fa-star" aria-hidden="true"></i></li>

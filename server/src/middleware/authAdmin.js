@@ -14,7 +14,6 @@ exports.authAdmin = async (req, res, next) => {
                 return res.status(400).json({ msg: "Invalid Authentication" })
             req.shop = shop
         })
-
         next();
 
     }

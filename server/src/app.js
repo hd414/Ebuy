@@ -32,7 +32,7 @@ app.use('/api', shopRouter);
 app.use('/api', orderRouter);
 
 
-mongoose.connect(process.env.MONGODB_URL, {
+mongoose.connect(process.env.MONGODB_CLOUD_URL, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,

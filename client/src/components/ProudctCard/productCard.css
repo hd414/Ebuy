@@ -134,17 +134,20 @@
   padding: 0 8px;
   }
   .product-price{
-  font-size: 1.5rem;
-  text-align: center;
+  font-size: 1rem;
+  text-align: left;
   color: #222f3e;
   margin: 0;
   margin-bottom: 10px;
   
   }
-
+  .product-price span{
+    margin-right: 4rem;
+  }
   .product-price::before{
     content: '\20B9 ';
     margin-right: 0.3rem;
+    margin-left: 1rem;
 }
 
 ul.product-rating{
@@ -167,7 +170,7 @@ ul.product-rating{
   .fa-shopping-cart,.fa-eye,.fa-trash,.fa-edit{
     font-size: 1.7rem;
   }
-  .fa:hover{
+  .ficon.fa:hover{
   transform: translateY(-7px);
   transition: .6s;
   }

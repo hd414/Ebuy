@@ -144,8 +144,8 @@ exports.getHistory = async (req, res) => {
 exports.getUserData = async (req, res) => {
     try {
         const id = req.params.id;
-        const res = await User.findById(id).select({ "_id": 0, "name": 1, "address": 1 });
-        res.status(200).json({ res });
+        const user = await User.findById(id).select({ "_id": 0, "name": 1, "address": 1, "contactNumber": 1 });
+        res.status(200).json({ user });
     }
     catch (e) {
         res.status(500).json({ error: e.message });

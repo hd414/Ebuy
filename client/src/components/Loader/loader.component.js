@@ -5,6 +5,7 @@ const Loader = () => {
     return (
         <div className="load-page">
             <div className="loader">
+
                 <div>
                     <div>
                         <div>
@@ -19,7 +20,27 @@ const Loader = () => {
                                                             <div>
                                                                 <div>
                                                                     <div>
-                                                                    </div></div>
+                                                                        <div>
+                                                                            <div>
+                                                                                <div>
+                                                                                    <div>
+                                                                                        <div>
+                                                                                            <div>
+                                                                                                <div>
+                                                                                                    <div>
+                                                                                                        <div>
+
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>

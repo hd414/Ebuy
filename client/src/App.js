@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Route, Switch } from 'react-router';
+import { Route, Switch, Redirect } from 'react-router';
 import './App.css';
 import Footer from './components/Footer/footer.component';
 import Navbar from './components/Navbar/Navbar.component';
@@ -20,16 +20,18 @@ import AdminSignup from './containers/Signup/AdminSignup';
 import Signup from './containers/Signup/Signup';
 import { GlobalState } from './context/globalState';
 
+
 function App() {
 
   const state = useContext(GlobalState);
   const [isAuth] = state.User.Auth;
+  const [isAdmin, setIsAdmin] = state.User.isAdmin;
 
   return (
     <div className="App">
       <Navbar />
       <Switch>
-        <Route path="/" exact component={Home} />
+        <Route path="/" exact>{isAdmin ? <Redirect to='/shop_products' /> : <Home />}</Route>
         <Route path="/signin" exact component={isAuth ? NotFound : Signin} />
         <Route path="/signup" exact component={isAuth ? NotFound : Signup} />
         <Route path="/admin/signin" exact component={isAuth ? NotFound : AdminSignin} />

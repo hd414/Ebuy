@@ -26,7 +26,7 @@ const ShopProducts = () => {
     }, [shopProducts])
 
     useEffect(() => {
-        console.log(Products);
+        // console.log(Products);
     }, [Products])
 
 

@@ -59,7 +59,8 @@ const Category = () => {
                 <label htmlFor="category">Category</label>
                 <input type="text" name="category" value={category} required
                     onChange={e => setCategory(e.target.value)} />
-
+                <br />
+                <br />
                 <button type="submit">{onEdit ? "Update" : "Create"}</button>
             </form>
 

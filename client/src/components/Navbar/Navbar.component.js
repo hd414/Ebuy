@@ -16,6 +16,7 @@ const Navbar = () => {
     const [isAdmin, setIsAdmin] = state.User.isAdmin;
     const [cartItems, setCartItems] = state.User.cart;
     const [showMenu, setShowMenu] = useState(false);
+    const [orderCount, setOrderCount] = state.User.OrderCount;
 
 
 
@@ -45,7 +46,10 @@ const Navbar = () => {
     const LoggedInRoute = () => {
         return (
             <>
-                <li><NavLink to="/history">History</NavLink></li>
+                <li><NavLink to="/history">
+                    Orders
+                    {isAdmin && (<span className="orderCount">{orderCount}</span>)}
+                </NavLink></li>
                 <li><Link to="/" onClick={logout}>Logout</Link></li>
             </>
         )
@@ -60,12 +64,18 @@ const Navbar = () => {
                 <Link to='#'><img src={menu} width="30px" alt="menu" /></Link>
             </div>
             <div className="logo">
-                <h2><Link to="/">{isAdmin ? 'Admin LocalMart' : 'LocalMart'}</Link> </h2>
+                {isAdmin ?
+                    <h2><Link to='/shop_products'>Admin Ebuy</Link> </h2>
+                    : <h2><Link to="/"> Ebuy</Link> </h2>
+                }
             </div>
             <div className="pages">
                 <ul style={menuStyle}>
 
-                    {!isAdmin && <li><NavLink to="/products">products</NavLink></li>}
+                    {!isAdmin && (<>
+                        {/* <li><a href="#shops">Shops</a></li> */}
+                        <li><NavLink to="/products">products</NavLink></li>
+                    </>)}
                     {isAdmin && AdminRoute()}
                     {
                         isAuth ? LoggedInRoute() : (
@@ -81,7 +91,7 @@ const Navbar = () => {
                 </ul>
             </div>
 
-            { isAdmin ? '' : (
+            {isAdmin ? '' : (
                 <div className="cart">
                     <span className="quantity">{cartItems?.length}</span>
 

@@ -45,7 +45,7 @@ exports.orderFromShop = async (req, res) => {
 exports.changeStatus = async (req, res) => {
     try {
         const id = req.params.id;
-        const res = await Orders.findByIdAndUpdate({ _id: id }, { status: !status });
+        await Orders.findByIdAndUpdate({ _id: id }, { status: true });
         res.status(200).json({ msg: "status updated" });
     }
     catch (e) {

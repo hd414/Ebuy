@@ -12,7 +12,7 @@ const Footer = () => {
         <>
             <footer className="footer">
                 <div className="footer__addr">
-                    <h1 className="footer__logo">LocalMart</h1>
+                    <h1 className="footer__logo">EBuy</h1>
 
                     <h2>Contact</h2>
 

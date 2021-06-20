@@ -170,7 +170,11 @@ const Cart = () => {
                                         return (
                                             <div key={item._id} className="item">
                                                 <div className="buttons">
-                                                    <span className="delete-btn" onClick={() => RemoveItem(item)}>X</span>
+                                                    <span
+                                                        className="delete-btn"
+                                                        onClick={() => RemoveItem(item)}>
+                                                        <i class="fa fa-trash" aria-hidden="true"
+                                                            style={{ color: "red", fontSize: "1.2rem" }}></i></span>
                                                     <span className="like-btn"></span>
                                                 </div>
 
@@ -186,12 +190,12 @@ const Cart = () => {
 
                                                 <div className="quantity">
                                                     <button className="plus-btn" type="button" name="button" onClick={() => increment(item)}>
-                                                        +
+                                                        <i class="fa fa-plus" style={{ fontSize: "0.8rem" }} aria-hidden="true"></i>
                                                     </button>
                                                     <input type="text" name="name" value={item.quantity} onChange={() => { }} />
                                                     <button className="minus-btn" type="button" name="button" onClick={() => decrement(item)}>
                                                         {/* <img src="minus.svg" alt="" /> */}
-                                                        -
+                                                        <i class="fa fa-minus" style={{ fontSize: "0.8rem" }} aria-hidden="true"></i>
                                                     </button>
                                                 </div>
 

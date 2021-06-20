@@ -13,7 +13,8 @@ const CreateProduct = () => {
         price: 0,
         description: "",
         content: "",
-        category: ""
+        category: "",
+        quantity: ''
     }
 
     const state = useContext(GlobalState)
@@ -44,6 +45,7 @@ const CreateProduct = () => {
                     setImages(product.images)
                 }
             })
+
         } else {
             setOnEdit(false)
             setProduct(InititalState)
@@ -136,7 +138,7 @@ const CreateProduct = () => {
 
                         : <div id="file_img" style={styleUpload}>
                             <img src={images ? images.url : ''} alt="" />
-                            <span onClick={handleDestroy}>X</span>
+                            <span onClick={handleDestroy}><i class="fa fa-times-circle"></i></span>
                         </div>
                 }
 
@@ -154,6 +156,12 @@ const CreateProduct = () => {
                     <label htmlFor="price">Price</label>
                     <input type="number" name="price" id="price" required
                         value={product.price} onChange={handleChangeInput} />
+                </div>
+
+                <div className="row">
+                    <label htmlFor="price">Quantity</label>
+                    <input type="text" name="quantity" id="quantity" required
+                        value={product?.quantity} onChange={handleChangeInput} />
                 </div>
 
                 <div className="row">

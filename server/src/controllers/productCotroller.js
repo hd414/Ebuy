@@ -94,7 +94,7 @@ exports.getProducts = async (req, res) => {
 exports.createProduct = async (req, res) => {
     try {
         // res.send("create  products");
-        const { title, price, description, content, images, category } = req.body;
+        const { title, price, description, content, images, category, quantity } = req.body;
         const shop = req.shop._id;
 
         if (!images) {
@@ -106,7 +106,7 @@ exports.createProduct = async (req, res) => {
         if (product)
             return res.status(400).json({ error: "this product already exists" });
 
-        const prod = new Product({ shop, title: title.toLowerCase(), price, description, content, images, category });
+        const prod = new Product({ shop, title: title.toLowerCase(), price, description, content, images, category, quantity });
         const result = await prod.save();
 
         const shopTemp = await Shop.findById(shop);
@@ -127,10 +127,11 @@ exports.editProducts = async (req, res) => {
         // res.send("edit product");
         const id = req.params.id;
         const shop = req.shop._id;
-        const { title, price, description, content, images, category } = req.body;
+
+        const { title, price, description, content, images, category, quantity } = req.body;
 
         const product = await Product.findByIdAndUpdate({ _id: id },
-            { title: title.toLowerCase(), price, description, content, images, category });
+            { title: title.toLowerCase(), price, description, content, images, category, quantity });
 
         res.status(200).json({ msg: "updated the product" });
     }

@@ -13,8 +13,7 @@ const UserApi = (token) => {
     const [shopCallback, setShopCallback] = useState(false);
     const [user, setUser] = useState('');
     const [Shops, setShops] = useState([]);
-    const [userhistory, setUserHistory] = useState([]);
-    const [adminHistory, setAdminHistory] = useState([]);
+    const [orderCount, setOrderCount] = useState(0);
 
 
 
@@ -120,6 +119,17 @@ const UserApi = (token) => {
                 }
 
                 setHistory(hist.data)
+
+                if (isAdmin) {
+                    let c = 0;
+                    const temp = hist.data.orders;
+                    temp.forEach((order) => {
+                        if (order.status === false)
+                            c++;
+                    })
+
+                    setOrderCount(c);
+                }
             }
 
             getHistory();
@@ -161,6 +171,7 @@ const UserApi = (token) => {
         ShopProducts: [shopProducts, setShopProducts],
         ShopCallback: [shopCallback, setShopCallback],
         Shops: [Shops, setShops],
+        OrderCount: [orderCount, setOrderCount],
     }
 }
 

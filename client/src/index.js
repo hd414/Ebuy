@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'normalize.css';
+// import 'normalize.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import { GlobalData } from './context/globalState';
+
 
 ReactDOM.render(
   <BrowserRouter>
